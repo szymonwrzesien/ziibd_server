@@ -3,8 +3,7 @@ package szymon.wrzesien.ziibd.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -12,7 +11,7 @@ import javax.persistence.Id;
 public class Employees {
 
   @Id
-  private String employeeId;
+  private Integer employeeId;
   private String firstName;
   private String lastName;
   private String email;
@@ -23,6 +22,9 @@ public class Employees {
   private String commissionPct;
   private String managerId;
   private String departmentId;
+
+
+
 
 
 }

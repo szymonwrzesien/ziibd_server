@@ -1,13 +1,12 @@
 package szymon.wrzesien.ziibd.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import szymon.wrzesien.ziibd.model.Employees;
 import szymon.wrzesien.ziibd.model.Jobs;
 import szymon.wrzesien.ziibd.repository.EmployeesRepository;
 import szymon.wrzesien.ziibd.repository.JobsRepository;
 
+import java.util.Calendar;
 import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -29,5 +28,31 @@ public class AppControler {
     }
 
     @GetMapping("/jobs")
-    public List<Jobs> getAllJobs() {return jobsRepository.findAll();}
+    public List<Jobs> getAllJobs() {
+        return jobsRepository.findAll();
+    }
+
+    @PostMapping("/saveNewEmployee")
+    public boolean saveNewEmployee(@RequestBody Employees newEmployee) {
+        Integer id = employeesRepository.findLastId() + 1;
+        newEmployee.setEmployeeId(id);
+        newEmployee.setJobId("AD_VP");
+        newEmployee.setHireDate(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+        employeesRepository.save(newEmployee);
+        return true;
+    }
+
+    @PostMapping("/deleteEmployee")
+    public boolean deleteEmployee(@RequestBody Employees newEmployee) {
+        employeesRepository.delete(newEmployee);
+        return true;
+    }
+
+    @PostMapping("/updateEmployee")
+    public boolean updateEmployee(@RequestBody Employees newEmployee) {
+        employeesRepository.save(newEmployee);
+        return true;
+    }
+
+
 }
