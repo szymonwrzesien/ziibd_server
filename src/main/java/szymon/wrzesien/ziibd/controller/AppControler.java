@@ -36,16 +36,15 @@ public class AppControler {
     public boolean saveNewEmployee(@RequestBody Employees newEmployee) {
         Integer id = employeesRepository.findLastId() + 1;
         newEmployee.setEmployeeId(id);
-        newEmployee.setJobId("AD_VP");
         newEmployee.setHireDate(new java.sql.Date(Calendar.getInstance().getTime().getTime()));
         employeesRepository.save(newEmployee);
         return true;
     }
 
     @PostMapping("/deleteEmployee")
-    public boolean deleteEmployee(@RequestBody Employees newEmployee) {
+    public List<Employees> deleteEmployee(@RequestBody Employees newEmployee) {
         employeesRepository.delete(newEmployee);
-        return true;
+        return employeesRepository.findAll();
     }
 
     @PostMapping("/updateEmployee")
